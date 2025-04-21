@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>League Table</title>
+</head>
+<body>
+  <h1>League Table</h1>
+  <table border="1">
+    <tr>
+      <th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th>
+    </tr>
+    {% for team, stats in table %}
+    <tr>
+      <td>{{ team }}</td>
+      <td>{{ stats['P'] }}</td>
+      <td>{{ stats['W'] }}</td>
+      <td>{{ stats['D'] }}</td>
+      <td>{{ stats['L'] }}</td>
+      <td>{{ stats['Pts'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 
+  <h2>Enter Match Result</h2>
+  <form method="POST">
+    <select name="team1">
+      {% for team, stats in table %}
+        <option>{{ team }}</option>
+      {% endfor %}
+    </select>
+    <input type="number" name="score1" min="0" required>
+    vs
+    <select name="team2">
+      {% for team, stats in table %}
+        <option>{{ team }}</option>
+      {% endfor %}
+    </select>
+    <input type="number" name="score2" min="0" required>
+    <button type="submit">Submit Result</button>
+  </form>
+</body>
+</html>
