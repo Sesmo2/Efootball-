@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import os
 
 app = Flask(__name__)
 
@@ -29,7 +30,7 @@ def table():
         score1 = int(request.form['score1'])
         score2 = int(request.form['score2'])
 
-        if (team1, team2) not in results:
+        if (team1, team2) not in results and (team2, team1) not in results:
             points_table[team1]['P'] += 1
             points_table[team2]['P'] += 1
 
@@ -51,3 +52,6 @@ def table():
 
     sorted_table = sorted(points_table.items(), key=lambda x: x[1]['Pts'], reverse=True)
     return render_template('table.html', fixtures=fixtures, table=sorted_table)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
